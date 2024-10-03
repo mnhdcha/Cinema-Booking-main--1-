@@ -14,21 +14,30 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   void _login() async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+  try {
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    // Sử dụng userCredential để lấy thông tin người dùng
+    final user = userCredential.user;
+    if (user != null) {
+      print('Đăng nhập thành công: ${user.email}');
       // Chuyển đến trang chính sau khi đăng nhập thành công
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => CinemaMainScreen()),
       );
-    } catch (e) {
-      print('Đăng nhập thất bại: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Đăng nhập thất bại')));
     }
+  } catch (e) {
+    print('Đăng nhập thất bại: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Đăng nhập thất bại')),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
