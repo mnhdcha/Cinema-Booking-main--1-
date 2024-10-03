@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ui_design/Cinema%20App%20UI/pages/cinema_main_screen.dart';
+import 'login_page.dart';  // Thêm import màn hình đăng nhập
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());  // Bỏ từ khóa 'const' ở đây
 }
 
 class MyApp extends StatelessWidget {
@@ -10,9 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(  // Bỏ 'const' ở đây
       debugShowCheckedModeBanner: false,
-      home: CinemaMainScreen(),
+      home: LoginPage(),  // Thay thế bằng LoginPage
     );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "959821110820",
+    "project_id": "cinema-8654b",
+    "storage_bucket": "cinema-8654b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959821110820:android:c894340bd9e378b07d42b1",
+        "android_client_info": {
+          "package_name": "com.example.flutter_ui_design"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAPBGKcloP7CsYXpk5kaBGbiLGwLepVic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
