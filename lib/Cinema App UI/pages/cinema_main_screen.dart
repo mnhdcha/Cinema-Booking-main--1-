@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui_design/Cinema%20App%20UI/consts.dart';
 import 'home_page_cinema.dart';
 import 'profile_page.dart'; // Import trang Profile
+import 'compass_page.dart'; // Import Compass page
 
 class CinemaMainScreen extends StatefulWidget {
   const CinemaMainScreen({super.key});
@@ -19,7 +20,7 @@ class _CinemaMainScreenState extends State<CinemaMainScreen> {
   void initState() {
     page = [
       const HomePageCinema(),
-      navBarPage(CupertinoIcons.compass_fill),
+       CompassPage(), // Update with CompassPage
       navBarPage(CupertinoIcons.ticket_fill),
       const ProfilePage(), // Thay đổi trang Profile
     ];
@@ -32,7 +33,7 @@ class _CinemaMainScreenState extends State<CinemaMainScreen> {
       backgroundColor: appBackgroundColor,
       body: page[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
             label: 'Home',

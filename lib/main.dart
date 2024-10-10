@@ -5,7 +5,7 @@ import 'login_page.dart';  // Thêm import màn hình đăng nhập
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());  // Bỏ từ khóa 'const' ở đây
+  runApp(const MyApp());  // Bỏ từ khóa 'const' ở đây
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(  // Bỏ 'const' ở đây
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),  // Thay thế bằng LoginPage
+      home: CustomLoginPage(),  // Thay thế bằng LoginPage
     );
   }
 }

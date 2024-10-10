@@ -3,6 +3,7 @@ import 'package:flutter_ui_design/Cinema%20App%20UI/consts.dart';
 import 'package:intl/intl.dart';
 import '../Widget/seat_status.dart';
 import '../models/seats_model.dart';
+import 'ticket_page.dart'; // Đảm bảo đường dẫn này đúng với vị trí file của bạn
 
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({super.key});
@@ -22,6 +23,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   DateTime selectedTime = DateTime.now();
   List<String> selectedSeats = [];
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +57,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       body: Column(
         children: [
           const SizedBox(height: 30),
-          wlecomeBorder(context),
+          welcomeBorder(context), // Sử dụng hàm đã định nghĩa
           const SizedBox(height: 20),
           // for movie seat
           Column(
@@ -157,10 +159,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         (index) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              selectedSeats
-                                  .clear(); // Clear previous selections
-                              selectedTime =
-                                  items[index]; // Update selected date
+                              selectedSeats.clear(); // Clear previous selections
+                              selectedTime = items[index]; // Update selected date
                             });
                           },
                           child: Container(
@@ -229,8 +229,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                           onTap: () {
                             setState(
                               () {
-                                selectedSeats
-                                    .clear(); // Clear previous selections
+                                selectedSeats.clear(); // Clear previous selections
                                 selectedTime = DateTime.utc(
                                   selectedTime.year,
                                   selectedTime.month,
@@ -303,7 +302,23 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       const SizedBox(width: 30),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (selectedSeats.isNotEmpty) {
+// Somewhere in reservation_screen.dart
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => TicketPage(
+      selectedSeats: 'B1, C1, C2', // or use dynamic data
+      totalPrice: 30.00,           // or use dynamic data
+      selectedTime: DateTime.now(),// or use the actual selected time
+      orderNumber: 'QW1E0RTY',     // or use your actual order number
+    ),
+  ),
+);
+
+                            }
+                          },
                           child: Container(
                             height: 60,
                             decoration: BoxDecoration(
@@ -325,94 +340,29 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       ),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 50),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Padding wlecomeBorder(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: SizedBox(
-        height: 65,
-        child: Stack(
-          children: [
-            Positioned(
-              top: -5,
-              width: MediaQuery.of(context).size.width - 50,
-              child: ClipPath(
-                clipper: ClipBorder(),
-                child: Container(
-                  width: double.infinity,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        buttonColor.withOpacity(0.3),
-                        Colors.transparent
-                      ],
-                      stops: const [
-                        0.35,
-                        1,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: -10,
-              width: MediaQuery.of(context).size.width - 50,
-              child: ClipPath(
-                clipper: ClipShadow(),
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  color: buttonColor,
-                ),
-              ),
-            ),
-          ],
-        ),
+  Widget welcomeBorder(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.6,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: const Text(
+        'Welcome to the Cinema App',
+        style: TextStyle(color: Colors.white, fontSize: 15),
+        textAlign: TextAlign.center,
       ),
     );
   }
-}
-
-class ClipShadow extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(size.width / 2, -20, size.width, size.height);
-    path.lineTo(size.width, size.height - 5);
-    path.quadraticBezierTo(size.width / 2, -25, 0, size.height - 5);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-class ClipBorder extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, size.height - 30);
-    path.quadraticBezierTo(size.width / 2, -20, 0, size.height - 30);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
